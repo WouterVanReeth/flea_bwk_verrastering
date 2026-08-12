@@ -1,4 +1,37 @@
-# hier komt code om de analyse door C.Wils dd. 6/v/25 in een mooie figuur te zetten
+# draft code voor figuur analyse C.Wils dd. 6/v/25 obv Gemini-suggesties 11/viii/26
+
+# probeersel 3 aanpassing gemini 2 met eigen data en ecosysteemtypen
+
+library(ggplot2)
+
+# 1. Voorbeelddata
+df <- data.frame(
+  biotoop = c("Bos", "Heide", "Moeras", "Grasland"),
+  OPP     = c(150, 80, 45, 120),
+  MINOPP  = c(120, 65, 30, 100),
+  MAXOPP  = c(170, 95, 60, 140)
+)
+
+# 2. Definieer je eigen hex-kleurcodes per biotoop
+kleuren_biotoop <- c(
+  "Bos"      = "#2e6f40", # Donkergroen
+  "Heide"    = "#8e44ad", # Paars
+  "Moeras"   = "#3498db", # Blauw
+  "Grasland" = "#2ecc71"  # Lichtgroen
+)
+
+# 3. Figuur maken
+ggplot(df, aes(y = reorder(biotoop, OPP), x = OPP, fill = biotoop)) +
+  geom_col(width = 0.6, alpha = 0.85) +
+  geom_errorbar(aes(xmin = MINOPP, xmax = MAXOPP), width = 0.2, color = "black") +
+  scale_fill_manual(values = kleuren_biotoop) +
+  labs(
+    title = "Oppervlakteschatting per biotoop",
+    x = "Oppervlakte",
+    y = "Biotoop"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none") # Verbergt de legende, want de Y-as toont de namen al
 
 # probeersel 1 gemini
 
@@ -23,7 +56,7 @@ ggplot(df, aes(y = reorder(biotoop, OPP), x = OPP)) +
   ) +
   theme_minimal()
 
-# probeersel 2 gemini
+# probeersel 2 gemini met eigen hex-kleurcodes
 
 library(ggplot2)
 
